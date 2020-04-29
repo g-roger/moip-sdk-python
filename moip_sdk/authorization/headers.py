@@ -1,6 +1,6 @@
 import base64
 
-from app import MOIP_API_KEY
+from moip_sdk import MOIP_API_KEY
 
 key = MOIP_API_KEY.encode('utf-8')
 authorization = base64.standard_b64decode(key)
