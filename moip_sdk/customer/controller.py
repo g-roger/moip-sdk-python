@@ -1,8 +1,8 @@
 import requests
 
-from app import MOIP_API_URL
-from app.authorization.headers import headers
-from app.customer.schemas import CustomerSchema
+from moip_sdk import MOIP_API_URL
+from moip_sdk.authorization.headers import headers
+from moip_sdk.customer.schemas import CustomerSchema
 
 
 def register_customer():

@@ -1,6 +1,6 @@
 from marshmallow import fields
 
-from app.common.converters import CamelCasedSchema
+from moip_sdk.common.converters import CamelCasedSchema
 
 
 class CustomerSchema(CamelCasedSchema):
