@@ -1,2 +1,3 @@
 marshmallow
+marshmallow-enum
 requests
