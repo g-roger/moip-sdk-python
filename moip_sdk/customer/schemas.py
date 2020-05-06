@@ -1,18 +1,19 @@
 from marshmallow import fields
 
-from app.common.converters import CamelCasedSchema
+from moip_sdk.common.converters import CamelCasedSchema
 
 
 class CustomerSchema(CamelCasedSchema):
-    name = fields.String(required=True)
+    own_id = fields.Integer(required=True)
+    fullname = fields.String(required=True)
     email = fields.Email(required=True)
     birth_date = fields.Date(required=True)
-    cpf = fields.String(required=True)
+    tax_document = fields.Nested('TaxDocumentSchema', required=True)
     phone = fields.Nested('PhoneSchema', required=True)
-    address = fields.Nested('AddressSchema')
+    shipping_address = fields.Nested('ShippingAddressSchema')
 
 
-class AddressSchema(CamelCasedSchema):
+class ShippingAddressSchema(CamelCasedSchema):
     city = fields.String()
     district = fields.String()
     street = fields.String()
@@ -20,6 +21,11 @@ class AddressSchema(CamelCasedSchema):
     zip_code = fields.String()
     state = fields.String()
     country = fields.String()
+
+
+class TaxDocumentSchema(CamelCasedSchema):
+    type = fields.String(required=True)
+    number = fields.String(required=True)
 
 
 class PhoneSchema(CamelCasedSchema):
