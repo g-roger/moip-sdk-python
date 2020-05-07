@@ -24,3 +24,11 @@ def get_order(order):
 
     result = result.content.decode('utf-8')
     return json.loads(result)
+
+
+def get_orders_by_email(email):
+    result = requests.get(f'{MOIP_API_URL}/orders?q={email}',
+                          headers=headers)
+
+    result = result.content.decode('utf-8')
+    return json.loads(result)
