@@ -16,3 +16,11 @@ def register_order(data):
 
     result = result.content.decode('utf-8')
     return json.loads(result)
+
+
+def get_order(order):
+    result = requests.get(f'{MOIP_API_URL}/orders/{order}',
+                          headers=headers)
+
+    result = result.content.decode('utf-8')
+    return json.loads(result)
