@@ -37,7 +37,6 @@ class InstructionLinesSchema(CamelCasedSchema):
 
 
 class BoletoSchema(CamelCasedSchema):
-    statementDescriptor = fields.String()
     expiration_date = fields.Date()
     instruction_lines = fields.Nested('InstructionLinesSchema')
-    logoUri = fields.String()
+    logo_uri = fields.String()
