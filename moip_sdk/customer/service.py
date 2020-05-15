@@ -16,3 +16,11 @@ def register_customer(data):
 
     result = result.content.decode('utf-8')
     return json.loads(result)
+
+
+def get_customer_by_id(customer_id):
+    result = requests.get(f'{MOIP_API_URL}/customers/{customer_id}',
+                          headers=headers)
+
+    result = result.content.decode('utf-8')
+    return json.loads(result)
