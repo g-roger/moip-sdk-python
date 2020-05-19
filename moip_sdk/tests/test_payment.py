@@ -97,6 +97,20 @@ class PaymentTestCase(unittest.TestCase):
         self.assertIsNotNone(response['id'])
         self.assertEqual(len(response), 14)
 
+    def test_register_boleto_payment(self):
+        payment_payload['fundingInstrument'] = {
+            'method': MoipPaymentMethod.BOLETO.name,
+            'boleto': {
+                'expirationDate': '2030-02-02'
+            }
+        }
+
+        payment = PaymentSchema().load(payment_payload)
+        response = register_payment(payment, self.registered_order['id'])
+
+        self.assertIsNotNone(response['id'])
+        self.assertEqual(len(response), 13)
+
 
 if __name__ == '__main__':
     unittest.main()
