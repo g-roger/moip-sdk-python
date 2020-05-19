@@ -2,7 +2,7 @@ import random
 import unittest
 
 from moip_sdk.customer.schemas import CustomerSchema
-from moip_sdk.customer.service import register_customer
+from moip_sdk.customer.service import get_customer_by_id, register_customer
 
 customer_payload = {
     'ownId': random.randint(900000, 90000000),
@@ -48,6 +48,12 @@ class CustomerTestCase(unittest.TestCase):
 
         self.assertIsNotNone(response['errors'])
         self.assertEqual(response['errors'][0]['code'], 'CUS-008')
+
+    def test_get_customer_by_id(self):
+        response = get_customer_by_id(self.registered_customer['id'])
+
+        self.assertIsNotNone(response['id'])
+        self.assertEqual(len(response), 10)
 
 
 if __name__ == '__main__':
