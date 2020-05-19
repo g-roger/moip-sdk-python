@@ -42,6 +42,13 @@ class CustomerTestCase(unittest.TestCase):
         self.assertIsNotNone(response['id'])
         self.assertEqual(len(response), 10)
 
+    def test_register_customer_with_existent_own_id(self):
+        self.customer['own_id'] = self.customer['own_id']
+        response = register_customer(self.customer)
+
+        self.assertIsNotNone(response['errors'])
+        self.assertEqual(response['errors'][0]['code'], 'CUS-008')
+
 
 if __name__ == '__main__':
     unittest.main()
