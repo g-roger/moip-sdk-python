@@ -97,6 +97,25 @@ class PaymentTestCase(unittest.TestCase):
         self.assertIsNotNone(response['id'])
         self.assertEqual(len(response), 14)
 
+    def test_register_credit_card_payment_with_invalid_data(self):
+        payment_payload['fundingInstrument'] = {
+            'method': MoipPaymentMethod.CREDIT_CARD.name,
+            'creditCard': {
+                'hash': 'MD6ZDloloRbBcYCnQKjluRzblLmUrGqfd0U0FuzTcmaWkhpHMX1Im9lh'
+                        'MwzhA3YDrYWui9GY3hVef37c6rSEWsb6ztZZqRbUz5dElpm3AKcKhVHpm'
+                        'LayKTcAWNLVynw+Fy3nfpTboN756e6nM8DmfaPBkUfQ2OXtgZKUWS6kGCPG'
+                        'Q4pIHRSA/dxSkxVmzUmTtbUsToT9fAZJbXIh88/Q6tznlV3Ulsb/WE8jkZm'
+                        '872zebB2fkfyQS+6IExDOuRa3WndiFGJHdTHS/JdpHe+lRXondIFjBrJ9lW'
+                        '8+EK4yZjLTvWxUMNbgGRui1dQ6Y5KDJHc5bVPVHFuVaH50lmcbnw=='
+            }
+        }
+
+        payment = PaymentSchema().load(payment_payload)
+        response = register_payment(payment, self.registered_order['id'])
+
+        self.assertIsNotNone(response['ERROR'])
+        self.assertEqual(response['ERROR'], 'Ops... We were not waiting for it')
+
     def test_register_boleto_payment(self):
         payment_payload['fundingInstrument'] = {
             'method': MoipPaymentMethod.BOLETO.name,
