@@ -4,7 +4,7 @@ import unittest
 from moip_sdk.customer.schemas import CustomerSchema
 from moip_sdk.customer.service import register_customer
 from moip_sdk.order.schemas import OrderSchema
-from moip_sdk.order.service import register_order
+from moip_sdk.order.service import register_order, get_order
 
 
 class OrderTestCase(unittest.TestCase):
@@ -58,6 +58,12 @@ class OrderTestCase(unittest.TestCase):
     def test_register_order(self):
         self.order['own_id'] = random.randint(900000, 90000000)
         response = register_order(self.order)
+
+        self.assertIsNotNone(response['id'])
+        self.assertEqual(len(response), 17)
+
+    def test_get_order_by_id(self):
+        response = get_order(self.registered_order['id'])
 
         self.assertIsNotNone(response['id'])
         self.assertEqual(len(response), 17)
