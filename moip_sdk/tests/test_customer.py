@@ -55,6 +55,12 @@ class CustomerTestCase(unittest.TestCase):
         self.assertIsNotNone(response['id'])
         self.assertEqual(len(response), 10)
 
+    def test_get_customer_with_invalid_id(self):
+        response = get_customer_by_id('CUS-GR')
+
+        self.assertIsNotNone(response['error'])
+        self.assertEqual(response['error'], 'resource not found')
+
 
 if __name__ == '__main__':
     unittest.main()
