@@ -130,6 +130,20 @@ class PaymentTestCase(unittest.TestCase):
         self.assertIsNotNone(response['id'])
         self.assertEqual(len(response), 13)
 
+    def test_register_boleto_payment_with_invalid_expiration_date(self):
+        payment_payload['fundingInstrument'] = {
+            'method': MoipPaymentMethod.BOLETO.name,
+            'boleto': {
+                'expirationDate': '2012-02-02'
+            }
+        }
+
+        payment = PaymentSchema().load(payment_payload)
+        response = register_payment(payment, self.registered_order['id'])
+
+        self.assertIsNotNone(response['errors'])
+        self.assertEqual(response['errors'][0]['code'], 'PAY-644')
+
 
 if __name__ == '__main__':
     unittest.main()
