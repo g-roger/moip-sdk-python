@@ -4,7 +4,7 @@ import unittest
 from moip_sdk.customer.schemas import CustomerSchema
 from moip_sdk.customer.service import register_customer
 from moip_sdk.order.schemas import OrderSchema
-from moip_sdk.order.service import register_order, get_order
+from moip_sdk.order.service import get_order, get_orders_by_email, register_order
 
 
 class OrderTestCase(unittest.TestCase):
@@ -12,7 +12,7 @@ class OrderTestCase(unittest.TestCase):
         customer_payload = {
             'ownId': random.randint(900000, 90000000),
             'fullname': 'João da Silva Teste',
-            'email': 'joao@mastertech.com.br',
+            'email': 'joao.teste@mastertech.com.br',
             'birthDate': '2000-02-02',
             'taxDocument': {
                 'type': 'CPF',
@@ -33,8 +33,9 @@ class OrderTestCase(unittest.TestCase):
                 'district': 'Passa Vinte'
             }
         }
-        customer = CustomerSchema().load(customer_payload)
-        registered_customer = register_customer(customer)
+
+        self.customer = CustomerSchema().load(customer_payload)
+        registered_customer = register_customer(self.customer)
 
         order_payload = {
             'ownId': random.randint(900000, 90000000),
@@ -67,6 +68,12 @@ class OrderTestCase(unittest.TestCase):
 
         self.assertIsNotNone(response['id'])
         self.assertEqual(len(response), 17)
+
+    def test_get_order_with_invalid_id(self):
+        response = get_order('ORD-GR')
+
+        self.assertIsNotNone(response['error'])
+        self.assertEqual(response['error'], 'resource not found')
 
 
 if __name__ == '__main__':
